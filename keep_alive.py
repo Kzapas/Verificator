@@ -4,30 +4,36 @@ import firebase_admin
 from firebase_admin import db
 import string
 import random
+import urllib.parse
 
 app = Flask(__name__)
 
+with open("settings.json", 'r', encoding='utf-8') as _settings_data:
+    settings = json.load(_settings_data)
+
+server_name = f"{settings['server_name']}"
 
 @app.route('/success', methods=["GET", "POST"])
 def home():
     if request.method == "POST":
+        discord_handle = str(request.form.get("dhandle"))
+        discord_handle = urllib.parse.quote(discord_handle)
         first_name = request.form.get("fname")
         last_name = request.form.get("lname")
-        code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=14))
-        print("Your name is " + first_name + " " + last_name + ". Your code is: " + code)
+        print("Your name is " + first_name + " " + last_name)
         db.reference("/users").set({
-        	code:
+        	discord_handle:
         	{
         		"fname": first_name,
             "lname": last_name
         	}
         })
-    return render_template("success.html", value=code)
+    return render_template("success.html")
 
 
 @app.route('/', methods=["GET", "POST"])
 def gdg():
-    return render_template("index.html")
+    return render_template("index.html", value=server_name)
 
 
 def run():

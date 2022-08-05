@@ -1,12 +1,18 @@
 {
-    "channel_id": 1004858227093155900,
-    "log_channel_id": 621497195664900128,
-    "message": "Im the role slut give me attention and I will give you a role\n\n✅: Member",
+    "channel_id": 1004911140142317599,
+    "log_channel_id": 1004910792510033952,
+    "message": "Hello! Welcome to the ECG Discord server! Please choose a role to get access to different channels! \n\n🐶: Dog\n\n🐱: Cats\n\nNotice:\nYou must have completed the form in order to choose roles!",
     "presence": "Carefully",
+    "server_name": "ECG",
+    "master_role": "Moderator",
     "roles": [
         {
-            "role": "Member",
-            "emoji": "✅"
+            "role": "Dogs",
+            "emoji": "🐶"
+        },
+        {
+            "role": "Cats",
+            "emoji": "🐱"
         }
     ]
 }
