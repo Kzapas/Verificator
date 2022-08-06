@@ -8,11 +8,6 @@ import urllib.parse
 
 app = Flask(__name__)
 
-with open("settings.json", 'r', encoding='utf-8') as _settings_data:
-    settings = json.load(_settings_data)
-
-server_name = f"{settings['server_name']}"
-
 @app.route('/success', methods=["GET", "POST"])
 def home():
     if request.method == "POST":
@@ -20,12 +15,15 @@ def home():
         discord_handle = urllib.parse.quote(discord_handle)
         first_name = request.form.get("fname")
         last_name = request.form.get("lname")
-        print("Your name is " + first_name + " " + last_name)
-        db.reference("/users").set({
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        db.reference("/users").push({
         	discord_handle:
         	{
-        		"fname": first_name,
-            "lname": last_name
+        		"firstname": first_name,
+            "lastname": last_name,
+            "email": email,
+            "phone":phone
         	}
         })
     return render_template("success.html")
@@ -33,7 +31,7 @@ def home():
 
 @app.route('/', methods=["GET", "POST"])
 def gdg():
-    return render_template("index.html", value=server_name)
+    return "Cannot GET"
 
 
 def run():
