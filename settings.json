@@ -1,7 +1,7 @@
 {
-    "log_channel_id": 1004910792510033952,
+    "log_channel_id": 1005533329304600647,
     "selfrole_message": "Hit a react role to get access to different channels for the games you want to play! \n\n🔱 - Blood on the Clocktower\n\n📮 - Among Us\n\n🎁 - Jackbox\n\n🎲 - Board games (TTS, BGA, or other online board games)\n\n🕹️ - TTRPGs\n\n🕵️ - Codenames\n\n🌎 - Access to Community events and announcements",
-    "verify_message": "Hello and **WELCOME** to the {0} Community!\n\nYou're just a few short steps away from being part of a positive, welcoming, encouraging and respectful community for gamers and game lovers of all walks of life.\n\nPlease **click on this link** and enter your community details to become part of this fun and amazing tribe!\nhttps://www.globalgamersalliance.com/eastcoastgamers-verification\n\nUpon completion, you will immediately be granted access to the rest of the server. So make sure to click on the link NOW, and we'll see you on the inside!",
+    "verify_message": "Hello and **WELCOME** to the {0} Community!\n\nYou're just a few short steps away from being part of a positive, welcoming, encouraging and respectful community for gamers and game lovers of all walks of life.\n\nPlease **click on this link** and enter your community details to become part of this fun and amazing tribe!\nhttps://www.globalgamersalliance.com/eastcoastgamers-verification\n\nUpon completion, please click the green verify reaction at the bottom to be granted access to the rest of the server. So make sure to click on the link NOW, and we'll see you on the inside!",
     "presence": "Carefully",
     "server_name": "ECG",
     "master_role": "Moderator",

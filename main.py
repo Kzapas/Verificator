@@ -11,7 +11,7 @@ from datetime import datetime
 import urllib.parse
 
 intents = discord.Intents().all()
-bot=commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 cred_obj = firebase_admin.credentials.Certificate(
     'ecgverification-firebase-adminsdk-25eoi-c0db023814.json')
@@ -19,24 +19,20 @@ default_app = firebase_admin.initialize_app(
     cred_obj,
     {'databaseURL': "https://ecgverification-default-rtdb.firebaseio.com/"})
 
-
 with open("settings.json", 'r', encoding='utf-8') as _settings_data:
     settings = json.load(_settings_data)
 
 server_name = f"{settings['server_name']}"
 master_role = f"{settings['master_role']}"
 
+
 @bot.event
 async def on_ready():
     print(f'Discord.py API version: {discord.__version__}')
     print(f'Python version: {platform.python_version()}')
     print(f'Logged in as {bot.user} | {bot.user.id}')
-    await bot.change_presence(
-        activity=discord.Activity(
-            type=discord.ActivityType.watching,
-            name=f"{settings['presence']}"
-        )
-    )
+    await bot.change_presence(activity=discord.Activity(
+        type=discord.ActivityType.watching, name=f"{settings['presence']}"))
     print("Bot is ready to be used!")
 
 
@@ -82,7 +78,8 @@ async def self_verify(ctx):
         roles.append(role['role'])
         emojis.append(role['emoji'])
 
-    bot_msg = await ctx.channel.send(settings['verify_message'].format(server_name))
+    bot_msg = await ctx.channel.send(
+        settings['verify_message'].format(server_name))
 
     with open("reactions.json", "r") as f:
         self_roles = json.load(f)
@@ -101,9 +98,10 @@ async def self_verify(ctx):
 def verifyidentity(payload, member):
     users = db.reference("/users").get()
     for i in users.keys():
-      for j in users[i].keys():
-          if j == urllib.parse.quote(str(member)):
-            return True
+        for j in users[i].keys():
+            if j == urllib.parse.quote(str(member)):
+                return True
+
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -136,13 +134,20 @@ async def on_raw_reaction_add(payload):
                 role = discord.utils.get(guild.roles, name=selected_role)
 
                 try:
-                  await payload.member.add_roles(role)
-                  await payload.member.send(f"Added **{selected_role}** Role!")
-                  await log_channel.send(f'`{datetime.now()}` - Added {selected_role} role to <@{payload.member.id}>')
+                    await payload.member.add_roles(role)
+                    await payload.member.send(
+                        f"Added **{selected_role}** Role!")
+                    await log_channel.send(
+                        f'`{datetime.now()}` - Added {selected_role} role to <@{payload.member.id}>'
+                    )
                 except:
-                  await payload.member.send("Sorry! I don't have permissions to give you that role!")
+                    await payload.member.send(
+                        "Sorry! I don't have permissions to give you that role!"
+                    )
     else:
-        await payload.member.send("Sorry! You aren't verified yet! Please verify yourself before trying to give yourself a role!")
+        await payload.member.send(
+            "Sorry! You aren't verified yet! Please verify yourself before trying to give yourself a role!"
+        )
         channel = bot.get_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         user = bot.get_user(payload.user_id)
@@ -153,19 +158,18 @@ async def on_raw_reaction_add(payload):
 @bot.event
 async def on_raw_reaction_remove(payload):
     guild = bot.get_guild(payload.guild_id)
-    member = await(guild.fetch_member(payload.user_id))
+    member = await (guild.fetch_member(payload.user_id))
     msg_id = payload.message_id
 
     with open("reactions.json", "r") as f:
         self_roles = json.load(f)
-      
+
     if verifyidentity(payload, member) == True and str(msg_id) in self_roles:
         emojis = []
         roles = []
 
         for emoji in self_roles[str(msg_id)]['emojis']:
-            emojis.append(
-                emoji)
+            emojis.append(emoji)
 
         for role in self_roles[str(msg_id)]['roles']:
             roles.append(role)
@@ -180,19 +184,36 @@ async def on_raw_reaction_remove(payload):
                 if member is not None:
                     await member.remove_roles(role)
                     await member.send(f"Removed **{selected_role}** Role!")
-                    await log_channel.send(f'`{datetime.now()}` - Removed {selected_role} role from <@{payload.user_id}>')
+                    await log_channel.send(
+                        f'`{datetime.now()}` - Removed {selected_role} role from <@{payload.user_id}>'
+                    )
+
 
 @bot.event
 async def on_message(message):
-  await bot.process_commands(message)
+    await bot.process_commands(message)
+
 
 @bot.event
 async def on_member_join(member):
-    mbed=discord.Embed(title="Verify Yourself >>", url="https://www.globalgamersalliance.com/eastcoastgamers-verification", description="In order to properly verify yourself and access the full Discord server, please fill out the form linked above./n", color=0x4dff00)
-    mbed.set_author(name="Welcome to the "+server_name+" Discord community!")
-    mbed.set_thumbnail(url="https://kzapas.github.io/ECG-Verification/assets/images/ecg-circle-logo-800-800-px-transparent-432x432.png")
-    mbed.set_footer(text="*No personal information is shared or sold. All information is used to organize group events, giveaways, etc.")
+    mbed = discord.Embed(
+        title="Verify Yourself >>",
+        url="https://www.globalgamersalliance.com/eastcoastgamers-verification",
+        description=
+        "In order to properly verify yourself and access the full Discord server, please fill out the form linked above./n",
+        color=0x4dff00)
+    mbed.set_author(name="Welcome to the " + server_name +
+                    " Discord community!")
+    mbed.set_thumbnail(
+        url=
+        "https://kzapas.github.io/ECG-Verification/assets/images/ecg-circle-logo-800-800-px-transparent-432x432.png"
+    )
+    mbed.set_footer(
+        text=
+        "*No personal information is shared or sold. All information is used to organize group events, giveaways, etc."
+    )
     await member.send(embed=mbed)
+
 
 startbot()
 bot.run(os.environ['token'])

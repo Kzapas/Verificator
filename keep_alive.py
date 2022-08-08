@@ -11,21 +11,24 @@ app = Flask(__name__)
 @app.route('/success', methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        discord_handle = str(request.form.get("dhandle"))
-        discord_handle = urllib.parse.quote(discord_handle)
-        first_name = request.form.get("fname")
-        last_name = request.form.get("lname")
-        email = request.form.get("email")
-        phone = request.form.get("phone")
-        db.reference("/users").push({
-        	discord_handle:
-        	{
-        		"firstname": first_name,
-            "lastname": last_name,
-            "email": email,
-            "phone":phone
-        	}
-        })
+        try:
+          discord_handle = str(request.form.get("dhandle"))
+          discord_handle = urllib.parse.quote(discord_handle)
+          first_name = request.form.get("fname")
+          last_name = request.form.get("lname")
+          email = request.form.get("email")
+          phone = request.form.get("phone")
+          db.reference("/users").push({
+          	discord_handle:
+          	{
+          		"firstname": first_name,
+              "lastname": last_name,
+              "email": email,
+              "phone":phone
+          	}
+          })
+        except:
+          print("Something went wrong!")
     return render_template("success.html")
 
 
