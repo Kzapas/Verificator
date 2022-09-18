@@ -176,7 +176,7 @@ google-cloud-storage = ">=1.37.1"
 
 [[package]]
 name = "flask"
-version = "2.2.0"
+version = "2.2.1"
 description = "A simple framework for building complex web applications."
 category = "main"
 optional = false
@@ -190,8 +190,8 @@ Jinja2 = ">=3.0"
 Werkzeug = ">=2.2.0"
 
 [package.extras]
-dotenv = ["python-dotenv"]
 async = ["asgiref (>=3.2)"]
+dotenv = ["python-dotenv"]
 
 [[package]]
 name = "google-api-core"
@@ -742,7 +742,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "b6cd2055eeee03b18ed5387da7ee33bbfabe682a9c82f15744176471cf9dea3a"
+content-hash = "6fb11ad4864a70f270fdbb05b2d1ae27d1c7aa5208877e2536b34edca6b821b3"
 
 [metadata.files]
 aiofiles = []

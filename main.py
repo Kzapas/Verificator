@@ -1,4 +1,3 @@
-from keep_alive import startbot
 import discord
 from discord.ext import commands
 import os
@@ -34,6 +33,8 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(
         type=discord.ActivityType.watching, name=f"{settings['presence']}"))
     print("Bot is ready to be used!")
+    log_channel = bot.get_channel(int(settings['log_channel_id']))
+    await log_channel.send(f'`{datetime.now()}` - BOT STARTED!')
 
 
 @bot.command(name="purge")
@@ -95,12 +96,19 @@ async def self_verify(ctx):
         await bot_msg.add_reaction(emoji)
 
 
-def verifyidentity(payload, member):
+def verifyidentity(member):
+    stat = []
     users = db.reference("/users").get()
     for i in users.keys():
         for j in users[i].keys():
             if j == urllib.parse.quote(str(member)):
-                return True
+                stat.append("T")
+            else:
+                stat.append("F")
+    if "T" in stat:
+      return True
+    else:
+      return False
 
 
 @bot.event
@@ -113,7 +121,7 @@ async def on_raw_reaction_add(payload):
     if payload.member.bot:
         return
 
-    if verifyidentity(payload, payload.member) == True and str(msg_id) in self_roles:
+    if verifyidentity(payload.member) == True and str(msg_id) in self_roles:
         emojis = []
         roles = []
 
@@ -134,17 +142,19 @@ async def on_raw_reaction_add(payload):
                 role = discord.utils.get(guild.roles, name=selected_role)
 
                 try:
-                    await payload.member.add_roles(role)
-                    await payload.member.send(
-                        f"Added **{selected_role}** Role!")
-                    await log_channel.send(
-                        f'`{datetime.now()}` - Added {selected_role} role to <@{payload.member.id}>'
-                    )
-                except:
+                    if payload.member is not None and role not in payload.member.roles:
+                      await payload.member.add_roles(role)
+                      await payload.member.send(
+                          f"Added **{selected_role}** Role!")
+                      await log_channel.send(
+                          f'`{datetime.now()}` - Added {selected_role} role to <@{payload.member.id}>'
+                      )
+                except Exception as e:
+                    print(e)
                     await payload.member.send(
                         "Sorry! I don't have permissions to give you that role!"
                     )
-    else:
+    elif verifyidentity(payload.member) == False and str(msg_id) in self_roles:
         await payload.member.send(
             "Sorry! You aren't verified yet! Please verify yourself before trying to give yourself a role!"
         )
@@ -164,7 +174,7 @@ async def on_raw_reaction_remove(payload):
     with open("reactions.json", "r") as f:
         self_roles = json.load(f)
 
-    if verifyidentity(payload, member) == True and str(msg_id) in self_roles:
+    if verifyidentity(member) == True and str(msg_id) in self_roles:
         emojis = []
         roles = []
 
@@ -181,7 +191,7 @@ async def on_raw_reaction_remove(payload):
             if choosed_emoji == emojis[i]:
                 selected_role = roles[i]
                 role = discord.utils.get(guild.roles, name=selected_role)
-                if member is not None:
+                if member is not None and role in member.roles:
                     await member.remove_roles(role)
                     await member.send(f"Removed **{selected_role}** Role!")
                     await log_channel.send(
@@ -215,5 +225,9 @@ async def on_member_join(member):
     await member.send(embed=mbed)
 
 
-startbot()
-bot.run(os.environ['token'])
+try:
+    bot.run(os.environ['token'])
+except discord.errors.HTTPException:
+    print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
+    os.system("python restarter.py")
+    os.system('kill 1')

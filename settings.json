@@ -1,38 +1,34 @@
 {
-    "log_channel_id": 1005533329304600647,
-    "selfrole_message": "Hit a react role to get access to different channels for the games you want to play! \n\n🔱 - Blood on the Clocktower\n\n📮 - Among Us\n\n🎁 - Jackbox\n\n🎲 - Board games (TTS, BGA, or other online board games)\n\n🕹️ - TTRPGs\n\n🕵️ - Codenames\n\n🌎 - Access to Community events and announcements",
-    "verify_message": "Hello and **WELCOME** to the {0} Community!\n\nYou're just a few short steps away from being part of a positive, welcoming, encouraging and respectful community for gamers and game lovers of all walks of life.\n\nPlease **click on this link** and enter your community details to become part of this fun and amazing tribe!\nhttps://www.globalgamersalliance.com/eastcoastgamers-verification\n\nUpon completion, please click the green verify reaction at the bottom to be granted access to the rest of the server. So make sure to click on the link NOW, and we'll see you on the inside!",
-    "presence": "Carefully",
+    "log_channel_id": 1006322416848470086,
+    "selfrole_message": "**Welcome to the East Coast Gamers Community!**\n\n Choose the roles that interest you the most and receive instant access to all this community has to offer! \n\n📔 : ECG-Community - Access to Community events and announcements\n\n🕚 : BOTC - All things related to Blood on the Clocktower\n\n🧩 : Boardgames - All things board game related\n\n🎲 : Jackbox - Jackbox games\n\n🧙 : RPG - Role Playing Games\n\n🎮 : Video-Games - Video Games\n\n",
+    "verify_message": "Hello and **WELCOME** to the {0} Community!\n\nYou're just a few short steps away from being part of a positive, welcoming, encouraging and respectful community for gamers and game lovers of all walks of life.\n\nPlease **click on this link** and enter your community details to become part of this fun and amazing tribe!\nhttps://www.globalgamersalliance.com/eastcoastgamers-verification\n\nWhen you've completed your registration, you will be able to click on the green verify reaction at the bottom of this message to be granted access to the role channel where you can assign yourself any of the desired roles. (We recommend all of them!)",
+    "presence": "https://www.twitch.tv/eastcoastgamingmachine",
     "server_name": "ECG",
-    "master_role": "Moderator",
+    "master_role": "ECG-Bot-Admin",
     "self_role": [
         {
-            "role": "BOCT",
-            "emoji": "🔱"
+            "role": "ECG-Community",
+            "emoji": "📔"
         },
         {
-            "role": "AmongUs",
-            "emoji": "📮"
+            "role": "BOTC",
+            "emoji": "🕚"
+        },
+        {
+            "role": "Boardgames",
+            "emoji": "🧩"
         },
         {
             "role": "Jackbox",
-            "emoji": "🎁"
-        },
-        {
-            "role": "BoardGames",
             "emoji": "🎲"
         },
         {
-            "role": "TTRPGS",
-            "emoji": "🕹️"
+            "role": "RPG",
+            "emoji": "🧙"
         },
         {
-            "role": "Codenames",
-            "emoji": "🕵️"
-        },
-        {
-            "role": "ECG-Community",
-            "emoji": "🌎"
+            "role": "Video-Games",
+            "emoji": "🎮"
         }
     ],
     "verify_role": [
